@@ -39,7 +39,7 @@ class BerandaController extends Controller
     public function profil(): View
     {
         $pengguna = [
-            'nama' => 'Valen',
+            'nama' => ucfirst(session('username', 'valen')),
             'peran' => 'Mahasiswa',
             'kampus' => 'Universitas Jember',
             'email' => 'valen@mail.unej.ac.id',
