@@ -1,3 +1,4 @@
+@props(['username' => null])
 <footer class="foot">
     <div class="wrap">
         <div class="foot-in">
@@ -7,13 +8,13 @@
             </div>
             <div>
                 <strong>Halaman</strong>
-                <a href="{{ route('kalender.index') }}">Kalender</a>
+                <a href="{{ route('pengelolaan') }}">Pengelolaan</a>
                 <a href="{{ route('grup.index') }}">Grup</a>
                 <a href="{{ route('tugas.index') }}">Tugas</a>
             </div>
             <div>
                 <strong>Lainnya</strong>
-                <a href="{{ route('profil') }}">Profil</a>
+                <a href="{{ route('profile', ['username' => $username]) }}">Profil</a>
                 <a href="{{ route('kontak') }}">Kontak</a>
             </div>
         </div>

@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Beranda')
+@section('title', 'Dashboard')
 
 @section('content')
 <section class="hero">
     <div class="wrap hero-in">
         <div>
+            <span class="badge grup" style="font-size:14px;margin-bottom:14px">Halo, {{ $username }}!</span>
             <h1>Satu kalender untuk kuliah dan organisasi</h1>
             <p class="muted">Lihat jadwal grup dari admin dan atur kegiatan pribadimu di tempat yang sama. Kegiatan pribadi tidak pernah terlihat oleh admin maupun anggota lain.</p>
             <div class="hero-actions">
-                <a href="{{ route('kalender.index') }}" class="btn">Buka kalender</a>
+                <a href="{{ route('pengelolaan') }}" class="btn">Buka pengelolaan</a>
                 <a href="{{ route('grup.index') }}" class="btn ghost">Lihat grup</a>
             </div>
         </div>
@@ -17,10 +18,7 @@
             <div class="muted" style="font-size:13px;font-weight:600;margin-bottom:10px">Kegiatan terdekat</div>
             <div class="list">
                 @foreach ($terdekat as $k)
-                    <a class="row-item" href="{{ route('kalender.show', $k['id']) }}">
-                        <div><strong>{{ $k['judul'] }}</strong><div class="muted" style="font-size:13px">{{ $k['tanggal'] }}, {{ $k['waktu'] }}</div></div>
-                        <x-badge :tipe="$k['tipe']" />
-                    </a>
+                    @include('partials.kegiatan-item', ['k' => $k, 'sub' => $k['tanggal'] . ', ' . $k['waktu']])
                 @endforeach
             </div>
         </div>
@@ -53,12 +51,7 @@
     </div>
     <div class="grid g3">
         @foreach ($grupUnggulan as $g)
-            <a href="{{ route('grup.show', $g['slug']) }}" class="card" style="text-decoration:none">
-                <span class="dot {{ $g['warna'] }}"></span>
-                <h3 style="margin-top:10px">{{ $g['nama'] }}</h3>
-                <p class="muted" style="margin:6px 0 12px;font-size:14px">{{ $g['ringkas'] }}</p>
-                <span class="muted" style="font-size:13px">{{ $g['anggota'] }} anggota</span>
-            </a>
+            @include('partials.kartu-grup', ['g' => $g])
         @endforeach
     </div>
 </section>

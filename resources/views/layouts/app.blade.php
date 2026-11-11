@@ -13,10 +13,11 @@
     <script defer src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
-    <x-navbar />
+    @php($username = $username ?? session('username'))
+    <x-navbar :username="$username" />
     <main>
         @yield('content')
     </main>
-    <x-footer />
+    <x-footer :username="$username" />
 </body>
 </html>

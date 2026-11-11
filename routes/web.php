@@ -1,32 +1,29 @@
 <?php
 
-use App\Http\Controllers\BerandaController;
-use App\Http\Controllers\GrupController;
-use App\Http\Controllers\KalenderController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\TugasController;
+use App\Http\Controllers\PageController;
 use App\Http\Middleware\CekLogin;
 use Illuminate\Support\Facades\Route;
 
-// Halaman login dan logout (tanpa database, akun disimpan di controller).
-Route::get('/login', [LoginController::class, 'form'])->name('login');
-Route::post('/login', [LoginController::class, 'proses'])->name('login.proses');
-Route::post('/keluar', [LoginController::class, 'keluar'])->name('keluar');
+// Login dan logout (simulasi, tanpa database).
+Route::get('/login', [PageController::class, 'login'])->name('login');
+Route::post('/login', [PageController::class, 'proses'])->name('login.proses');
+Route::post('/keluar', [PageController::class, 'keluar'])->name('keluar');
 
-// Semua halaman lain hanya bisa dibuka setelah login.
+// Halaman lain hanya bisa dibuka setelah login.
 Route::middleware(CekLogin::class)->group(function () {
-    Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+    Route::get('/', fn () => redirect()->route('dashboard'));
+    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/kalender', [KalenderController::class, 'index'])->name('kalender.index');
-    Route::get('/kalender/kegiatan/{id}', [KalenderController::class, 'show'])
+    Route::get('/pengelolaan', [PageController::class, 'pengelolaan'])->name('pengelolaan');
+    Route::get('/pengelolaan/kegiatan/{id}', [PageController::class, 'kegiatan'])
         ->whereNumber('id')
-        ->name('kalender.show');
+        ->name('kegiatan');
 
-    Route::get('/grup', [GrupController::class, 'index'])->name('grup.index');
-    Route::get('/grup/{slug}', [GrupController::class, 'show'])->name('grup.show');
+    Route::get('/grup', [PageController::class, 'grup'])->name('grup.index');
+    Route::get('/grup/{slug}', [PageController::class, 'grupDetail'])->name('grup.show');
 
-    Route::get('/tugas', [TugasController::class, 'index'])->name('tugas.index');
+    Route::get('/tugas', [PageController::class, 'tugas'])->name('tugas.index');
 
-    Route::get('/profil', [BerandaController::class, 'profil'])->name('profil');
-    Route::get('/kontak', [BerandaController::class, 'kontak'])->name('kontak');
+    Route::get('/profile', [PageController::class, 'profile'])->name('profile');
+    Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
 });

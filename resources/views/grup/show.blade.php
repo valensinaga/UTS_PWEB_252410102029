@@ -19,7 +19,7 @@
 
         <div x-show="tab === 'kegiatan'" class="list">
             @foreach ($grup['kegiatan'] as $k)
-                <a class="row-item" href="{{ route('kalender.show', $k['id']) }}">
+                <a class="row-item" href="{{ route('kegiatan', $k['id']) }}">
                     <div><strong>{{ $k['judul'] }}</strong><div class="muted" style="font-size:13px">{{ $k['tanggal'] }}, {{ $k['waktu'] }}, {{ $k['tempat'] }}</div></div>
                     <span class="muted" style="font-size:13px">Dibuat admin</span>
                 </a>

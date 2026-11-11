@@ -24,8 +24,8 @@
         </form>
 
         <div class="note" style="margin-top:18px">
-            <strong>Akun demo</strong>
-            <p style="margin:6px 0 0">Username: <b>{{ $akunDemo['username'] }}</b><br>Password: <b>{{ $akunDemo['password'] }}</b></p>
+            <strong>Simulasi login</strong>
+            <p style="margin:6px 0 0">Isi username dan password apa saja. Tidak ada database, username hanya diteruskan ke dashboard dan profil.</p>
         </div>
     </div>
 </section>

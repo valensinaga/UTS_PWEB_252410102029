@@ -1,19 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'Kalender')
+@section('title', 'Pengelolaan')
 
 @section('content')
 <section class="section">
     <div class="wrap">
         <div class="cal-top">
             <div>
+                <div class="muted" style="font-size:13px;font-weight:600">PENGELOLAAN KEGIATAN</div>
                 <h1 style="font-size:32px">{{ $judulBulan }}</h1>
                 <p class="muted" style="margin:4px 0 0">{{ count($bulanIni) }} kegiatan bulan ini</p>
             </div>
             <div style="display:flex;gap:8px">
-                <a class="btn ghost" href="{{ route('kalender.index', ['bulan' => $sebelumnya]) }}" aria-label="Bulan sebelumnya">Sebelumnya</a>
-                <a class="btn ghost" href="{{ route('kalender.index') }}">Bulan ini</a>
-                <a class="btn ghost" href="{{ route('kalender.index', ['bulan' => $berikutnya]) }}" aria-label="Bulan berikutnya">Berikutnya</a>
+                <a class="btn ghost" href="{{ route('pengelolaan', ['bulan' => $sebelumnya]) }}" aria-label="Bulan sebelumnya">Sebelumnya</a>
+                <a class="btn ghost" href="{{ route('pengelolaan') }}">Bulan ini</a>
+                <a class="btn ghost" href="{{ route('pengelolaan', ['bulan' => $berikutnya]) }}" aria-label="Bulan berikutnya">Berikutnya</a>
             </div>
         </div>
 
@@ -37,7 +38,7 @@
                             @endif
                             @if ($hari['dalamBulan'])
                                 @foreach ($hari['kegiatan'] as $k)
-                                    <a href="{{ route('kalender.show', $k['id']) }}" class="pill {{ $k['tipe'] }}" data-tipe="{{ $k['tipe'] }}" title="{{ $k['judul'] }}">{{ $k['judul'] }}</a>
+                                    <a href="{{ route('kegiatan', $k['id']) }}" class="pill {{ $k['tipe'] }}" data-tipe="{{ $k['tipe'] }}" title="{{ $k['judul'] }}">{{ $k['judul'] }}</a>
                                 @endforeach
                             @endif
                         </div>
@@ -49,13 +50,7 @@
         <div class="section-head" style="margin-top:40px"><h2>Daftar kegiatan</h2></div>
         <div class="list">
             @forelse ($bulanIni as $k)
-                <a class="row-item" href="{{ route('kalender.show', $k['id']) }}" data-tipe="{{ $k['tipe'] }}">
-                    <div>
-                        <strong>{{ $k['judul'] }}</strong>
-                        <div class="muted" style="font-size:13px">{{ \Carbon\Carbon::parse($k['tanggal'])->locale('id')->translatedFormat('d F') }}, {{ $k['mulai'] }}, {{ $k['tempat'] }}</div>
-                    </div>
-                    <x-badge :tipe="$k['tipe']" />
-                </a>
+                @include('partials.kegiatan-item', ['k' => $k, 'sub' => \Carbon\Carbon::parse($k['tanggal'])->locale('id')->translatedFormat('d F') . ', ' . $k['mulai'] . ', ' . $k['tempat']])
             @empty
                 <div class="card muted">Belum ada kegiatan di bulan ini. Coba buka bulan November atau Desember 2026.</div>
             @endforelse

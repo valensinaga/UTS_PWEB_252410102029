@@ -5,7 +5,7 @@
 @section('content')
 <section class="section">
     <div class="wrap" style="max-width:820px">
-        <div class="crumb"><a href="{{ route('kalender.index') }}">Kalender</a> / {{ $kegiatan['judul'] }}</div>
+        <div class="crumb"><a href="{{ route('pengelolaan') }}">Pengelolaan</a> / {{ $kegiatan['judul'] }}</div>
         <div class="card">
             <x-badge :tipe="$kegiatan['tipe']" />
             <h1 style="font-size:32px;margin-top:12px">{{ $kegiatan['judul'] }}</h1>
@@ -28,10 +28,7 @@
             <div class="section-head" style="margin-top:40px"><h2 style="font-size:20px">Kegiatan {{ $kegiatan['tipe'] }} lainnya</h2></div>
             <div class="list">
                 @foreach ($lainnya as $k)
-                    <a class="row-item" href="{{ route('kalender.show', $k['id']) }}">
-                        <div><strong>{{ $k['judul'] }}</strong><div class="muted" style="font-size:13px">{{ \Carbon\Carbon::parse($k['tanggal'])->locale('id')->translatedFormat('d F Y') }}</div></div>
-                        <x-badge :tipe="$k['tipe']" />
-                    </a>
+                    @include('partials.kegiatan-item', ['k' => $k, 'sub' => \Carbon\Carbon::parse($k['tanggal'])->locale('id')->translatedFormat('d F Y')])
                 @endforeach
             </div>
         @endif
